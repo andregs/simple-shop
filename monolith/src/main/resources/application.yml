@@ -1,0 +1,12 @@
+
+#logging:
+#  level:
+#    org.h2: DEBUG
+#    org.springframework.data.r2dbc: DEBUG
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:///store?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  jpa:
+    hibernate:
+      ddl-auto: validate
