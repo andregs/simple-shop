@@ -1,0 +1,44 @@
+<form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card>
+
+    <mat-card-header>
+      <mat-card-title>Please, sign-in</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="row">
+        <mat-form-field class="full-width">
+          <mat-placeholder>
+            <mat-icon>person</mat-icon> Username
+          </mat-placeholder>
+          <input matInput formControlName="username">
+          <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
+            Username is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field class="full-width">
+          <mat-placeholder>
+            <mat-icon>vpn_key</mat-icon> Password
+          </mat-placeholder>
+          <input matInput formControlName="password">
+          <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+            Password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Login</button>
+    </mat-card-actions>
+
+  </mat-card>
+</form>
+
+<!-- generated with command: ng g c login -m app -->
+<!-- then I customized it based on dashboard & address components -->
+<!-- reference for material icons: https://material.io/resources/icons/?style=baseline -->
+<!-- reference for material components: https://material.angular.io/components/categories -->

@@ -5,14 +5,14 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>🔑 Manage</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Users</a>
-      <a mat-list-item href="#">Products</a>
+      <a mat-list-item routerLink="/dashboard">Users</a>
+      <a mat-list-item routerLink="/table">Products</a>
     </mat-nav-list>
     <mat-toolbar>🛒 Store</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Shop</a>
-      <a mat-list-item href="#">My Orders</a>
-      <a mat-list-item href="#">Exit</a>
+      <a mat-list-item routerLink="/address">Shop</a>
+      <a mat-list-item routerLink="/">My Orders</a>
+      <a mat-list-item routerLink="/login">Exit</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -25,14 +25,10 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>UI - Here's the top row</span>
+      <span (click)="drawer.toggle()">UI - Here's the top row</span>
     </mat-toolbar>
 
-    <h2>Main content here</h2>
-    <p>This is how you add the navigation layout:</p>
-    <a href="https://material.angular.io/guide/schematics#navigation-schematic">
-      https://material.angular.io/guide/schematics#navigation-schematic
-    </a>
+    <router-outlet></router-outlet>
 
   </mat-sidenav-content>
 </mat-sidenav-container>
