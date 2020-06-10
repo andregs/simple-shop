@@ -1,33 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { MatSidenav } from '@angular/material/sidenav';
+import { LoginService, LoginInitiated } from './login/login.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+  @ViewChild(MatSidenav, { static: true })
+  private drawer: MatSidenav;
 
   constructor(
     private http: HttpClient,
-    private breakpointObserver: BreakpointObserver
+    private loginService: LoginService,
   ) {
   }
 
   ngOnInit(): void {
     const url = 'api/users/hello';
-    // http.get<any>(url).subscribe(
-    //   data => this.greeting = data,
-    // );
+
+    this.loginService.events.subscribe(
+      event => {
+        console.info('got', event.constructor.name);
+        if (event instanceof LoginInitiated) {
+          this.drawer.close();
+        } else {
+          this.drawer.open();
+        }
+      },
+    );
   }
 
 }
