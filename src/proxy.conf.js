@@ -6,24 +6,24 @@
 // see https://github.com/microsoft/WSL/issues/4619
 
 module.exports = {
-  /*"/api": {
-    "target": "http://172.19.0.1:8080",
-    "secure": false,
-    "logLevel": "debug",
-    "pathRewrite": {
-      "^/api": ""
+  "/api": {
+    target: "http://172.27.208.1:8080",
+    secure: false,
+    logLevel: "debug",
+    pathRewrite: {
+      "^/api": "",
     },
   },
-  "/login": {
-    "target": "http://172.19.0.1:8080",
+/*   "/login": {
+    "target": "http://172.27.208.1:8080",
     "secure": false,
     "logLevel": "debug",
   },
   "/logout": {
-    "target": "http://172.19.0.1:8080",
+    "target": "http://172.27.208.1:8080",
     "secure": false,
     "logLevel": "debug",
-  },*/
+  }, */
 }
 
 // if you run both UI and your backend in linux WSL2:

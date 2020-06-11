@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatSidenav } from '@angular/material/sidenav';
-import { LoginService, LoginInitiated } from './login/login.service';
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -13,25 +12,21 @@ export class AppComponent implements OnInit {
   @ViewChild(MatSidenav, { static: true })
   private drawer: MatSidenav;
 
-  constructor(
-    private http: HttpClient,
-    private loginService: LoginService,
-  ) {
-  }
-
   ngOnInit(): void {
     const url = 'api/users/hello';
+    this.drawer.open();
+  }
 
-    this.loginService.events.subscribe(
-      event => {
-        console.info('got', event.constructor.name);
-        if (event instanceof LoginInitiated) {
-          this.drawer.close();
-        } else {
-          this.drawer.open();
-        }
-      },
-    );
+  onActivate(component: any): void {
+    if (component instanceof LoginComponent) {
+      this.drawer.close();
+    }
+  }
+
+  onDeactivate(component: any): void {
+    if (component instanceof LoginComponent) {
+      this.drawer.open();
+    }
   }
 
 }

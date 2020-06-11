@@ -17,7 +17,9 @@
       <span>UI - Here's the top row</span>
     </mat-toolbar>
 
-    <router-outlet></router-outlet>
+    <router-outlet
+      (activate)="onActivate($event)"
+      (deactivate)="onDeactivate($event)"></router-outlet>
 
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -1,37 +1,39 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { LoginService } from './login.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { AuthService } from '../security/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
 
-  readonly loginForm = this.fb.group({
-    username: [null, Validators.required],
-    password: [null, Validators.required],
-  });
+  readonly loginForm: FormGroup;
 
-  private authenticated = false;
-
-  constructor(private fb: FormBuilder, private service: LoginService) { }
-
-  ngOnInit(): void {
-    this.service.init();
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly authService: AuthService,
+  ) {
+    this.loginForm = this.fb.group({
+      username: [null, Validators.required],
+      password: [null, Validators.required],
+    });
   }
 
-  ngOnDestroy(): void {
-    if (!this.authenticated) {
-      this.service.cancel();
-    }
+  ngOnInit(): void {
   }
 
   onSubmit() {
-    const evt = { who: this.loginForm.controls.username.value };
-    alert(`Hi, ${evt.who}!`);
-    this.service.login(evt.who);
+    const credentials = {
+      username: this.loginForm.controls.username.value,
+      password: this.loginForm.controls.password.value,
+    };
+
+    this.authService.login(credentials).subscribe(
+      res => console.info('login success', res),
+      err => console.error('login error', err),
+    );
   }
 
 }
