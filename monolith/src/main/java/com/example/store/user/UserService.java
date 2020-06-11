@@ -31,6 +31,7 @@ class UserService {
 
     @Transactional
     User save(CreateUserDTO dto) {
+        // TODO https://spring.io/guides/tutorials/spring-security-and-angular-js/
         logger.info("saving a new user");
         if (!dto.getPassword().equals(dto.getConfirmation())) {
             throw new IllegalArgumentException("Passwords don't match");

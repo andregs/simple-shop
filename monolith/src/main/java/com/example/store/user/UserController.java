@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.security.Principal;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,6 +19,11 @@ class UserController {
 
     private final Logger logger;
     private final UserService userService;
+
+    @GetMapping("current")
+    Principal currentUser(Principal user) {
+        return user;
+    }
 
     @PostMapping
     ResponseEntity<Void> create(@RequestBody CreateUserDTO createUserDTO) {
