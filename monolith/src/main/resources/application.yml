@@ -1,6 +1,7 @@
 
 #logging:
 #  level:
+#    org.springframework.security: DEBUG
 #    org.h2: DEBUG
 #    org.springframework.data.r2dbc: DEBUG
 
