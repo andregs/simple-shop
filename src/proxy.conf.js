@@ -3,37 +3,22 @@
 // cat /etc/resolv.conf
 // https://docs.microsoft.com/en-us/windows/wsl/compare-versions#accessing-windows-networking-apps-from-linux-host-ip
 // but currently the proxy only works if we disable windows firewall for public network
-// see https://github.com/microsoft/WSL/issues/4619
+// TODO see https://github.com/microsoft/WSL/issues/4619
+
+const { execSync } = require('child_process');
+
+function getWslHostIp() {
+  const command = 'cat /etc/resolv.conf | grep nameserver | sed -e "s/\s*nameserver \s*//g"';
+  return execSync(command).toString().trim();
+};
 
 module.exports = {
   "/api": {
-    target: "http://172.27.208.1:8080",
+    target: `http://${getWslHostIp()}:8080`,
     secure: false,
     logLevel: "debug",
     pathRewrite: {
       "^/api": "",
     },
   },
-/*   "/login": {
-    "target": "http://172.27.208.1:8080",
-    "secure": false,
-    "logLevel": "debug",
-  },
-  "/logout": {
-    "target": "http://172.27.208.1:8080",
-    "secure": false,
-    "logLevel": "debug",
-  }, */
 }
-
-// if you run both UI and your backend in linux WSL2:
-// module.exports = {
-//   "/api": {
-//     "target": "http://localhost:8080",
-//     "secure": false,
-//     "logLevel": "debug",
-//     "pathRewrite": {
-//       "^/api": ""
-//     }
-//   }
-// }

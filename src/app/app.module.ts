@@ -15,6 +15,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { AddressComponent } from './address/address.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +24,7 @@ import { CoreModule } from './core/core.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { TableComponent } from './table/table.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -32,6 +34,7 @@ import { TableComponent } from './table/table.component';
     TableComponent,
     AddressComponent,
     LoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,7 @@ import { TableComponent } from './table/table.component';
     MatCardModule,
     MatMenuModule,
     MatTableModule,
+    MatTooltipModule,
     MatPaginatorModule,
     MatSortModule,
     MatInputModule,

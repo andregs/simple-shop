@@ -1,22 +1,37 @@
 <mat-sidenav-container class="sidenav-container">
+
   <mat-sidenav #drawer class="sidenav" fixedInViewport role="navigation" mode="side">
-    <mat-toolbar>🔑 Manage</mat-toolbar>
+    <mat-toolbar><mat-icon>admin_panel_settings</mat-icon> Management</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/dashboard">Users</a>
       <a mat-list-item routerLink="/table">Products</a>
     </mat-nav-list>
-    <mat-toolbar>🛒 Store</mat-toolbar>
+    <mat-toolbar><mat-icon>shopping_cart</mat-icon> Store</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/address">Shop</a>
+      <a mat-list-item routerLink="address">Shop</a>
       <a mat-list-item routerLink="/">My Orders</a>
-      <a mat-list-item routerLink="/login">Exit</a>
     </mat-nav-list>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <span>UI - Here's the top row</span>
+      <span>A Fancy Shop</span>
+      <span class="toolbar-spacer"></span>
+
+      <button *ngIf="isLoginButtonVisible | async"
+        routerLink="login" mat-icon-button matTooltip="Login Screen">
+        <mat-icon class="toolbar-icon">login</mat-icon>
+      </button>
+
+      <ng-container *ngIf="isAuthenticated | async">
+        <span class="greeting">Hi, {{currentUserName | async}}.</span>
+        <button (click)="logout()" mat-icon-button matTooltip="Exit App">
+          <mat-icon class="toolbar-icon">exit_to_app</mat-icon>
+        </button>
+      </ng-container>
     </mat-toolbar>
 
+    <!-- Main content is injected in this outlet by Angular's router -->
     <router-outlet
       (activate)="onActivate($event)"
       (deactivate)="onDeactivate($event)"></router-outlet>

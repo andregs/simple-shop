@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../security/auth.service';
 
 @Component({
@@ -14,6 +15,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
   ) {
     this.loginForm = this.fb.group({
       username: [null, Validators.required],
@@ -24,16 +27,26 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const credentials = {
       username: this.loginForm.controls.username.value,
       password: this.loginForm.controls.password.value,
     };
 
     this.authService.login(credentials).subscribe(
-      res => console.info('login success', res),
+      () => {
+        console.info('login success');
+        this.router.navigate(this.getReturnUrl());
+      },
+
+      // TODO display error message when bad credentials
       err => console.error('login error', err),
     );
+  }
+
+  private getReturnUrl(): string[] {
+    const returnUrl = this.route.snapshot.queryParams.returnUrl;
+    return [returnUrl || '/'];
   }
 
 }

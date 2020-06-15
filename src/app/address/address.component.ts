@@ -87,7 +87,7 @@ export class AddressComponent {
 
   constructor(private fb: FormBuilder) {}
 
-  onSubmit() {
+  onSubmit(): void {
     alert('Thanks!');
   }
 }
