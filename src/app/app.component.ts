@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Router } from '@angular/router';
-import { MonoTypeOperatorFunction, Observable } from 'rxjs';
-import { finalize, filter, map } from 'rxjs/operators';
-import { LoginComponent } from './login/login.component';
-import { User } from './model/user';
-import { AuthService } from './security/auth.service';
+import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { AuthService } from './auth/auth.service';
+import { LoginComponent } from './auth/login/login.component';
+import { User, Role } from './model/user';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +22,6 @@ export class AppComponent implements OnInit {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly router: Router,
   ) {
     this.currentUser = this.authService.currentUser;
   }
@@ -42,7 +40,7 @@ export class AppComponent implements OnInit {
   get currentUserName(): Observable<string> {
     return this.authService.currentUser.pipe(
       filter(user => user != null),
-      map(user => user!.name),
+      map(user => user!.username),
     );
   }
 
@@ -66,15 +64,11 @@ export class AppComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.logout()
-      .pipe(this.goHome())
-      .subscribe();
+    this.authService.logout().subscribe();
   }
 
-  private goHome(): MonoTypeOperatorFunction<void> {
-    return finalize(() => {
-      this.router.navigate(['/']);
-    });
+  hasRole(role: Role): Observable<boolean> {
+    return this.authService.hasRole(role);
   }
 
 }

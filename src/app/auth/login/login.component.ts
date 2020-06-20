@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../security/auth.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(this.getReturnUrl());
       },
 
-      // TODO display error message when bad credentials
+      // TODO display error message when bad credentials!
       err => console.error('login error', err),
     );
   }

@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
-export class AuthenticationGuard implements CanActivateChild {
+export class IsAuthenticatedGuard implements CanActivateChild {
   constructor(
     private readonly authService: AuthService,
     private readonly router: Router,
@@ -14,11 +14,14 @@ export class AuthenticationGuard implements CanActivateChild {
   canActivateChild(_: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.authService.currentUser.pipe(
       switchMap(user => {
+        console.info('got user', user);
         if (user == null) {
           const returnUrl = state.url;
+          console.info('going /login');
           const loginPromise = this.router.navigate(['/login'], { queryParams: { returnUrl } });
           return from(loginPromise);
         } else {
+          console.info('you can pass');
           return of(true);
         }
       }),

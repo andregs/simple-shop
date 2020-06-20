@@ -1,8 +1,11 @@
 export interface User {
-  name: string;
+  username: string;
+  authorities: [{ authority: string }];
 }
 
 export interface Credentials {
   username: string;
   password: string;
 }
+
+export type Role = 'ADMIN' | 'CUSTOMER';
