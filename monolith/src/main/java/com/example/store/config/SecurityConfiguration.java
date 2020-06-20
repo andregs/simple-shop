@@ -1,5 +1,7 @@
 package com.example.store.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -7,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
@@ -15,7 +18,10 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import javax.sql.DataSource;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    private final ObjectMapper objectMapper;
 
     @Autowired
     public void initialize(AuthenticationManagerBuilder auth, DataSource dataSource) throws Exception {
@@ -45,13 +51,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
 
-            // standard login form that sends 204-NO_CONTENT when login is OK and 401-UNAUTHORIZED when login fails
+            // login form that sends 200 when login is OK and 401-UNAUTHORIZED when login fails
             .and()
                 .formLogin()
-                .successHandler((req, res, auth) -> res.setStatus(HttpStatus.NO_CONTENT.value()))
+                .successHandler(getAuthenticationSuccessHandler())
                 .failureHandler(new SimpleUrlAuthenticationFailureHandler())
 
-            // standard logout that sends 204-NO_CONTENT when logout is OK
+            // logout endpoint that sends 204-NO_CONTENT when logout is OK
             .and()
                 .logout()
                 .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.NO_CONTENT))
@@ -64,5 +70,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
         ;
+    }
+
+    private AuthenticationSuccessHandler getAuthenticationSuccessHandler() {
+        return (req, res, auth) -> {
+            var body = objectMapper.writeValueAsString(auth.getPrincipal());
+            res.setStatus(HttpStatus.OK.value());
+            res.getWriter().write(body);
+        };
     }
 }

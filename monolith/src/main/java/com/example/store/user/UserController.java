@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -21,8 +22,9 @@ class UserController {
     private final UserService userService;
 
     @GetMapping("current")
-    Principal currentUser(Principal user) {
-        return user;
+    Object currentUser(Principal user) {
+        var authToken = (UsernamePasswordAuthenticationToken) user;
+        return authToken.getPrincipal();
     }
 
     @PostMapping
