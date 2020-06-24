@@ -9,7 +9,6 @@ target/
 .classpath
 .factorypath
 .project
-.settings
 .springBeans
 .sts4-cache
 
@@ -26,6 +25,3 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
-
-### VS Code ###
-.vscode/

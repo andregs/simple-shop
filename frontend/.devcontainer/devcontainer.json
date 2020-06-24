@@ -1,0 +1,22 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.122.1/containers/javascript-node-14
+{
+  "name": "Node.js 14",
+  "dockerComposeFile": ["../../docker-compose.yml"],
+  "service": "frontend",
+  "shutdownAction": "none",
+  "workspaceFolder": "/workspace/frontend",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+    "johnpapa.angular-essentials",
+    "eamodio.gitlens",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+  ],
+  "forwardPorts": [
+    4200
+  ],
+  "postCreateCommand": "npm i -g @angular/cli@9.1 && npm i",
+  "remoteUser": "node"
+}

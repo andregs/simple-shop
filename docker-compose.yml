@@ -1,0 +1,17 @@
+version: '3'
+services:
+  frontend:
+    build: ./frontend/.devcontainer
+    volumes:
+      # Mount the root folder that contains .git
+      - .:/workspace:cached
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    links:
+      - backend
+
+  backend:
+    build: ./backend/.devcontainer
+    volumes:
+      # Mount the root folder that contains .git
+      - .:/workspace:cached
+    command: /bin/sh -c "while sleep 1000; do :; done"

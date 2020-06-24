@@ -14,7 +14,8 @@ function getWslHostIp() {
 
 module.exports = {
   "/api": {
-    target: `http://${getWslHostIp()}:8080`,
+    // target: `http://${getWslHostIp()}:8080`,
+    target: `http://backend:8080`,
     secure: false,
     logLevel: "debug",
     pathRewrite: {

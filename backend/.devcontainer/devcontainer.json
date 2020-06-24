@@ -1,0 +1,22 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.122.1/containers/java-14
+{
+  "name": "Java 11",
+  "dockerComposeFile": ["../../docker-compose.yml"],
+  "service": "backend",
+  "shutdownAction": "none",
+  "workspaceFolder": "/workspace/backend",
+  "settings": { 
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "java.home": "/docker-java-home"
+  },
+  "extensions": [
+    "vscjava.vscode-java-pack",
+    "Pivotal.vscode-boot-dev-pack",
+    "SonarSource.sonarlint-vscode",
+    "eamodio.gitlens",
+    "GabrielBB.vscode-lombok"
+  ],
+  "forwardPorts": [8080],
+  "remoteUser": "vscode"
+}
