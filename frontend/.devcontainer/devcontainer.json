@@ -10,13 +10,11 @@
     "terminal.integrated.shell.linux": "/bin/bash"
   },
   "extensions": [
-    "johnpapa.angular-essentials",
     "eamodio.gitlens",
+    "johnpapa.angular-essentials",
     "ms-vscode.vscode-typescript-tslint-plugin",
   ],
-  "forwardPorts": [
-    4200
-  ],
-  "postCreateCommand": "npm i -g @angular/cli@9.1 && npm i",
-  "remoteUser": "node"
+  "forwardPorts": [4200],
+  "remoteUser": "node",
+  "postCreateCommand": "npm i -g @angular/cli@9.1 && npm i"
 }

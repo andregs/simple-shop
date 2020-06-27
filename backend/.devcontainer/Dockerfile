@@ -58,6 +58,14 @@ ENV MAVEN_CONFIG /root/.m2
 #     && ln -s "${GRADLE_HOME}/bin/gradle" /usr/bin/gradle
 #-------------------------------------------------------------------------------------------------------------
 
+# Prepare workspace
+RUN mkdir /workspace \
+    && cd /workspace \
+    && git init \
+    && git remote add origin https://github.com/andregs/simple-shop.git \
+    && mkdir backend frontend \
+    && chown vscode:vscode -R /workspace
+
 # Clean up
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get autoremove -y \

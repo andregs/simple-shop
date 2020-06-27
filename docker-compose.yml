@@ -3,8 +3,7 @@ services:
   frontend:
     build: ./frontend/.devcontainer
     volumes:
-      # Mount the root folder that contains .git
-      - .:/workspace:cached
+      - simple-shop-volume:/workspace
     command: /bin/sh -c "while sleep 1000; do :; done"
     links:
       - backend
@@ -12,6 +11,8 @@ services:
   backend:
     build: ./backend/.devcontainer
     volumes:
-      # Mount the root folder that contains .git
-      - .:/workspace:cached
+      - simple-shop-volume:/workspace
     command: /bin/sh -c "while sleep 1000; do :; done"
+
+volumes:
+  simple-shop-volume:

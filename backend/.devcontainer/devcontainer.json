@@ -11,12 +11,13 @@
     "java.home": "/docker-java-home"
   },
   "extensions": [
+    "eamodio.gitlens",
     "vscjava.vscode-java-pack",
     "Pivotal.vscode-boot-dev-pack",
     "SonarSource.sonarlint-vscode",
-    "eamodio.gitlens",
     "GabrielBB.vscode-lombok"
   ],
   "forwardPorts": [8080],
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+  "postCreateCommand": "cd .. && git pull origin master"
 }
