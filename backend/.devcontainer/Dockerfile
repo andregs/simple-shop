@@ -4,6 +4,7 @@
 #-------------------------------------------------------------------------------------------------------------
 
 FROM openjdk:11-jdk
+# see https://github.com/microsoft/vscode-dev-containers/tree/master/containers/java-11
 
 # This Dockerfile adds a non-root user with sudo access. Use the "remoteUser"
 # property in devcontainer.json to use it. On Linux, the container user's GID/UIDs

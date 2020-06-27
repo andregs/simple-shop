@@ -1,0 +1,25 @@
+= README
+
+This repo contains my ongoing experiments of how to build a simple shop with a Java Spring backend & Angular frontend.
+
+== Build from source
+
+You don't need to manually install & setup Java, Maven, Node, Angular etc. to play with this repo. As long as you have Docker, VSCode and the proper extension installed, the dev containers can be automatically built for you.
+
+=== Setup on Windows
+
+. Install https://docs.microsoft.com/en-us/windows/wsl/install-win10[Windows Subsystem for Linux 2] and a Linux distribution (I'm using Ubuntu 20.04);
+. Install https://docs.docker.com/docker-for-windows/install/[Docker Desktop for Windows] and enable the https://docs.docker.com/docker-for-windows/wsl/[WSL2 backend];
+. Install https://code.visualstudio.com/docs/setup/windows[VSCode] and the https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack["Remote Development"] extension.
+. Clone or download this repo. Open the link:./backend[backend] dir in VSCode.
+. At this point, VSCode will suggest you to reopen the dir in a container. Accept that.
+** VSCode and Docker will build and start our backend & frontend dev containers. This step takes a while to complete for the first time.
+** The link:./backend/.devcontainer/devcontainer.json[backend dev container] contains JDK 11, Maven 3, GIT and a couple of extensions for Java Development on VSCode.
+*** It also clones this repo on a https://docs.docker.com/storage/volumes/[local named volume], so the changes you make on the code inside the dev container will not appear on Windows and vice-versa. I could have https://docs.docker.com/storage/bind-mounts/[bind-mounted] the repo on the container, but the disk performance would not be good enough.
+*** VSCode is going to show you a security warning because our workspace refers to lombok.jar to https://github.com/redhat-developer/vscode-java/wiki/Lombok-support[enable annotation processing]. You can dismiss that.
+. Click on the ▶ button on "Spring-Boot Dashboard" panel, or open VSCode terminal and type: ``mvn -pl monolith spring-boot:run``
+** The backend is now up and running. You can test the endpoints on Windows at http://localhost:8080
+. Open the link:./frontend[frontend] dir in VSCode. Accept the suggestion to reopen the dir in a container.
+** The link:./frontend/.devcontainer/devcontainer.json[frontend dev container] contains Node.js 14, NPM, Yarn, GIT and a couple of extensions for Angular Development on VSCode.
+. Click on the ▶ button on the "start" script in "NPM Scripts" panel, or open VSCode terminal and type: ``npm start``
+** The frontend is now up and running. Open your browser and go to http://localhost:4200/ to test the app.

@@ -3,6 +3,7 @@
 	// List of extensions which should be recommended for users of this workspace.
   "recommendations": [
     "ms-vscode-remote.vscode-remote-extensionpack",
-		"vscode-icons-team.vscode-icons"
+    "vscode-icons-team.vscode-icons",
+    "asciidoctor.asciidoctor-vscode"
   ]
 }
