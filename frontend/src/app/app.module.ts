@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
 import { TableComponent } from './table/table.component';
+import { UserModule } from './user/user.module';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { TableComponent } from './table/table.component';
     BrowserModule,
     SharedModule,
     AuthModule,
+    UserModule,
     AppRoutingModule,
   ],
   providers: [

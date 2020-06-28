@@ -1,0 +1,38 @@
+### NOTES
+# You can clear cookies with rm ~/.rest-client/cookie.json
+
+### anonymous user tries to access protected resource
+
+GET http://localhost:8080/users/current
+
+# 401 + cookie XSRF-TOKEN
+
+### authentication with valid credentials
+
+POST http://localhost:8080/login
+Content-Type: application/x-www-form-urlencoded
+X-XSRF-TOKEN: eff59883-9d8c-4d75-9765-1d21ed871a32
+
+username=stanley
+&password=ipkiss
+
+# 200 + cookie JSESSIONID + new cookie XSRF-TOKEN + user details json
+
+### authenticated access to protected resource
+
+GET http://localhost:8080/users/current
+
+# 200 + user details json
+
+### valid logout requests
+
+POST http://localhost:8080/logout
+X-XSRF-TOKEN: 957f9c5d-f7b0-42d3-a449-42f9699776d7
+
+# 204
+
+### list all registered users
+
+GET http://localhost:8080/users
+
+# 200 + user list json

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { AuthService } from './auth/auth.service';
 import { LoginComponent } from './auth/login/login.component';
-import { User, Role } from './model/user';
+import { AuthenticatedUser, Role } from './model/user';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   @ViewChild(MatSidenav, { static: true })
   private readonly drawer: MatSidenav;
 
-  readonly currentUser: Observable<User | null>;
+  readonly currentUser: Observable<AuthenticatedUser | null>;
 
   private isLoginScreen: boolean;
 

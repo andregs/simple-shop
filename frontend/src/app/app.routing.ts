@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddressComponent } from './address/address.component';
+import { HasRoleGuard } from './auth/has-role.guard';
 import { IsAuthenticatedGuard } from './auth/is-authenticated.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
-import { TableComponent } from './table/table.component';
-import { HasRoleGuard } from './auth/has-role.guard';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: '', canActivateChild: [IsAuthenticatedGuard], children: [
-      { path: 'dashboard', component: DashboardComponent, canActivate: [HasRoleGuard], data: {role: 'ADMIN'} },
-      { path: 'table', component: TableComponent, canActivate: [HasRoleGuard], data: {role: 'ADMIN'} },
       { path: 'address', component: AddressComponent },
+      { path: 'dashboard', component: DashboardComponent, canActivate: [HasRoleGuard], data: {role: 'ADMIN'} },
+      { path: 'users', component: UserComponent, canActivate: [HasRoleGuard], data: {role: 'ADMIN'} },
     ],
   },
   // { path: '**', component: NotFoundComponent },
