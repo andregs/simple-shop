@@ -2,7 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
-import { UserDataSource, UserItem } from './user-datasource';
+import { ActivatedRoute } from '@angular/router';
+import { User } from '../model/user';
+import { UserDataSource } from './user-datasource';
 
 @Component({
   selector: 'app-user',
@@ -12,17 +14,25 @@ import { UserDataSource, UserItem } from './user-datasource';
 export class UserComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatTable) table: MatTable<UserItem>;
+  @ViewChild(MatTable) table: MatTable<User>;
   dataSource: UserDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+  displayedColumns: Array<keyof User> = ['id', 'username', 'role'];
 
-  ngOnInit() {
-    this.dataSource = new UserDataSource();
+  constructor(
+    private readonly route: ActivatedRoute,
+  ){}
+
+  ngOnInit(): void {
+    this.route.data.subscribe(
+      data => {
+        this.dataSource = new UserDataSource(data.users);
+      },
+    );
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
