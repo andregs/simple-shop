@@ -5,7 +5,7 @@
             "name": "Spring Boot-MonolithApplication<monolith>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "console": "internalConsole",
+            "console": "integratedTerminal",
             "mainClass": "com.example.store.MonolithApplication",
             "projectName": "monolith",
             "args": ""
