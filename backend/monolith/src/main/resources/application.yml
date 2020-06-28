@@ -8,6 +8,13 @@
 spring:
   datasource:
     url: jdbc:h2:mem:///store?options=DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  
+  # enable so spring boot tools & actuator can show us live info about our running app
+  # activate via 'Manage Live Spring Boot Process Connections' in vscode
+  # see https://github.com/spring-projects/sts4/wiki/Live-Application-Information
+  jmx:
+    enabled: true
+  
   jpa:
     hibernate:
       ddl-auto: validate

@@ -10,5 +10,6 @@
     "rest-client.previewOption": "exchange",
     "java.saveActions.organizeImports": true,
     "java.sources.organizeImports.staticStarThreshold": 3,
-    "java.sources.organizeImports.starThreshold": 3
+    "java.sources.organizeImports.starThreshold": 3,
+    "java.configuration.updateBuildConfiguration": "automatic"
 }
