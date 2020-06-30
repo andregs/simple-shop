@@ -1,8 +1,11 @@
 package com.example.store.user;
 
+import java.security.Principal;
+import java.util.List;
+
 import com.example.store.user.data.CreateUserDTO;
 import com.example.store.user.data.UserQueryDTO;
-import lombok.RequiredArgsConstructor;
+
 import org.slf4j.Logger;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.security.Principal;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController

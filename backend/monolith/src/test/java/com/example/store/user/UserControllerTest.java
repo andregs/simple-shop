@@ -1,28 +1,31 @@
 package com.example.store.user;
 
-import com.example.store.user.data.CreateUserDTO;
-import com.example.store.user.data.Role;
-import com.example.store.user.data.User;
-import com.example.store.user.data.UserQueryDTO;
-import net.minidev.json.JSONValue;
+import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.util.Arrays;
+
+import com.example.store.user.data.*;
+
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Arrays;
+import net.minidev.json.JSONValue;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-@WebMvcTest
+@WebMvcTest(controllers = UserController.class)
+@AutoConfigureTestDatabase
 class UserControllerTest {
 
     @Autowired
@@ -35,6 +38,7 @@ class UserControllerTest {
     UserService userService;
 
     @Test
+    @WithMockUser
     void create() throws Exception {
         var expected = new User(42L, "mary", "pass", Role.ADMIN);
         doReturn(expected).when(userService).save(any());
@@ -44,7 +48,8 @@ class UserControllerTest {
 
         var request = MockMvcRequestBuilders.post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(json);
+                .content(json)
+                .with(csrf());
 
         mockMvc.perform(request)
                 .andExpect(status().isCreated())
@@ -55,6 +60,7 @@ class UserControllerTest {
     }
 
     @Test
+    @WithMockUser
     void read() throws Exception {
         var expected = Arrays.asList(
                 new UserQueryDTO(1L, "stanley", Role.ADMIN),
