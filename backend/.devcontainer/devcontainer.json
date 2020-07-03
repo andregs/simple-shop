@@ -16,7 +16,9 @@
     "Pivotal.vscode-boot-dev-pack",
     "SonarSource.sonarlint-vscode",
     "GabrielBB.vscode-lombok",
-    "humao.rest-client"
+    "humao.rest-client",
+    "redhat.vscode-xml",
+    "ryanluker.vscode-coverage-gutters"
   ],
   "forwardPorts": [8080],
   "remoteUser": "vscode",
