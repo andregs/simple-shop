@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // here you can customize queries when you already have credentials stored somewhere
         var usersQuery = "select username, password, 'true' from users where username = ?";
         var rolesQuery = "select username, role from users where username = ?";
-        auth.jdbcAuthentication()
+        auth.jdbcAuthentication() // FIXME fix sonar issue
                 .dataSource(dataSource)
                 .usersByUsernameQuery(usersQuery)
                 .authoritiesByUsernameQuery(rolesQuery)
