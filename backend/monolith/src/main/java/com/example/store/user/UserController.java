@@ -18,19 +18,19 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("users")
-class UserController {
+public class UserController {
 
     private final Logger logger;
     private final UserService userService;
 
     @GetMapping("current")
-    Object currentUser(Principal user) {
+    public Object currentUser(Principal user) {
         var authToken = (UsernamePasswordAuthenticationToken) user;
         return authToken.getPrincipal();
     }
 
     @PostMapping
-    ResponseEntity<Void> create(@RequestBody CreateUserDTO createUserDTO) {
+    public ResponseEntity<Void> create(@RequestBody CreateUserDTO createUserDTO) {
         logger.info("POST a new user {}", createUserDTO);
         var userId = userService.save(createUserDTO).getId();
         logger.info("User {} created", userId);
@@ -39,7 +39,7 @@ class UserController {
     }
 
     @GetMapping
-    List<UserQueryDTO> read(Pageable pageable) {
+    public List<UserQueryDTO> read(Pageable pageable) {
         logger.info("GET a list of users");
         return userService.findAll(pageable);
     }

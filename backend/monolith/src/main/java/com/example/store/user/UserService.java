@@ -1,9 +1,9 @@
 package com.example.store.user;
 
-import com.example.store.user.data.CreateUserDTO;
-import com.example.store.user.data.User;
-import com.example.store.user.data.UserQueryDTO;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
+import com.example.store.user.data.*;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
@@ -11,11 +11,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-class UserService {
+public class UserService {
 
     private final Logger logger;
     private final UserRepository repository;
@@ -30,7 +30,7 @@ class UserService {
     }
 
     @Transactional
-    User save(CreateUserDTO dto) {
+    public User save(CreateUserDTO dto) {
         // TODO https://spring.io/guides/tutorials/spring-security-and-angular-js/
         logger.info("saving a new user");
         if (!dto.getPassword().equals(dto.getConfirmation())) {

@@ -1,84 +1,71 @@
 package com.example.store.user;
 
-import com.example.store.user.data.CreateUserDTO;
-import com.example.store.user.data.Role;
-import com.example.store.user.data.User;
-import com.example.store.user.data.UserQueryDTO;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.Arrays;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.AdditionalAnswers.returnsFirstArg;
-import static org.mockito.Mockito.*;
+import com.example.store.config.CoreConfiguration;
+import com.example.store.user.data.*;
 
-@ExtendWith(MockitoExtension.class)
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Pageable;
+
+@DataJpaTest
+@Import({CoreConfiguration.class, UserService.class})
 class UserServiceTest {
 
-    @Mock
-    Logger logger;
-
-    @Mock
+    @Autowired
     UserRepository userRepository;
 
-    @Spy
-    ModelMapper modelMapper;
-
-    @InjectMocks
+    @Autowired
     UserService userService;
 
     @Test
+    @DisplayName("findAll should fetch users from DB")
     void findAll() {
         var expected = Arrays.asList(
-                new UserQueryDTO(42L, "stanley", Role.ADMIN),
-                new UserQueryDTO(43L, "peter", Role.CUSTOMER));
-
-        doReturn(new PageImpl<>(expected))
-                .when(userRepository).findAll(isA(Pageable.class));
+                new UserQueryDTO(1L, "stanley", Role.ADMIN),
+                new UserQueryDTO(2L, "john", Role.CUSTOMER));
 
         var actual = userService.findAll(Pageable.unpaged());
 
-        verify(userRepository, times(1))
-                .findAll(isA(Pageable.class));
-
-        assertThat(actual).isEqualTo(expected);
+        assertThat(actual).containsAll(expected);
     }
 
     @Test
-    void save_shouldStoreNewUser() {
-        doAnswer(returnsFirstArg())
-                .when(userRepository).save(isA(User.class));
-
+    @DisplayName("when user is valid, save() should persist the user")
+    void save1() {
         var dto = new CreateUserDTO("fred", "flintstone", "flintstone", Role.ADMIN);
+        var oldCount = userRepository.count();
+        
         var actual = userService.save(dto);
 
-        verify(userRepository, times(1))
-                .save(isA(User.class));
-
+        assertThat(userRepository.count()).isEqualTo(oldCount + 1);
+        
         assertThat(actual)
-                .isNotNull()
-                .isEqualTo(new User("fred", "flintstone", Role.ADMIN));
+            .isNotNull()
+            .extracting(User::getUsername, User::getPassword, User::getRole)
+            .containsExactly("fred", "flintstone", Role.ADMIN);
+
+        assertThat(actual.getId()).isGreaterThan(0);
     }
 
     @Test
-    void save_whenPasswordMismatch_shouldThrowError() {
+    @DisplayName("when passwords don't match, save() should throw error")
+    void save2() {
         var dto = new CreateUserDTO("stanley", "pass", "wrong", Role.ADMIN);
+        var oldCount = userRepository.count();
 
         assertThatThrownBy(() -> userService.save(dto))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Passwords don't match");
 
-        verify(userRepository, never()).save(any());
+        assertThat(userRepository.count()).isEqualTo(oldCount);
     }
 
 }
