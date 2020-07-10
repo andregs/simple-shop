@@ -6,7 +6,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.Arrays;
 
 import com.example.store.config.CoreConfiguration;
+import com.example.store.config.SecurityConfiguration;
+import com.example.store.product.ProductService;
 import com.example.store.user.data.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +19,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Pageable;
 
 @DataJpaTest
-@Import({CoreConfiguration.class, UserService.class})
+@Import({UserService.class, ObjectMapper.class})
 class UserServiceTest {
 
     @Autowired
@@ -25,9 +28,13 @@ class UserServiceTest {
     @Autowired
     UserService userService;
 
+    @Autowired(required=false)
+    ProductService productService;
+    
     @Test
     @DisplayName("findAll should fetch users from DB")
     void findAll() {
+        assertThat(productService).isNull();
         var expected = Arrays.asList(
                 new UserQueryDTO(1L, "stanley", Role.ADMIN),
                 new UserQueryDTO(2L, "john", Role.CUSTOMER));

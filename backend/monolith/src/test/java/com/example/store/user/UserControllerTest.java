@@ -1,5 +1,6 @@
 package com.example.store.user;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
@@ -9,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Arrays;
 
+import com.example.store.product.ProductService;
 import com.example.store.user.data.*;
 
 import org.junit.jupiter.api.DisplayName;
