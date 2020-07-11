@@ -7,6 +7,7 @@ import com.example.store.user.data.CreateUserDTO;
 import com.example.store.user.data.UserQueryDTO;
 
 import org.slf4j.Logger;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("users")
+@ConditionalOnProperty(prefix = "app.user", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class UserController {
 
     private final Logger logger;

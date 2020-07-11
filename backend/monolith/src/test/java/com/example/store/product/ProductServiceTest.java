@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(properties = "app.user.enabled=false")
 public class ProductServiceTest {
     
     @Autowired(required=false)
@@ -23,7 +23,5 @@ public class ProductServiceTest {
         assertThat(userService).isNull();
         assertThat(productService.foo()).isEqualTo("FOO!");
     }
-
-
 
 }

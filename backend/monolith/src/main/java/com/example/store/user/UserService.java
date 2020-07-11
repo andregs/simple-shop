@@ -7,6 +7,7 @@ import com.example.store.user.data.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
+@ConditionalOnProperty(prefix = "app.user", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class UserService {
 
     private final Logger logger;

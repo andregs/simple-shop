@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.Arrays;
 
 import com.example.store.config.CoreConfiguration;
-import com.example.store.config.SecurityConfiguration;
 import com.example.store.product.ProductService;
 import com.example.store.user.data.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,8 +17,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Pageable;
 
-@DataJpaTest
-@Import({UserService.class, ObjectMapper.class})
+@DataJpaTest(properties = "app.product.enabled=false")
+@Import({UserService.class, ObjectMapper.class, CoreConfiguration.class})
 class UserServiceTest {
 
     @Autowired
